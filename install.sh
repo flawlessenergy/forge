@@ -6,7 +6,7 @@
 
 set -e
 
-REPO_URL="https://github.com/atharva336/forge"
+REPO_URL="https://github.com/flawlessenergy/forge"
 INSTALL_DIR="$HOME/.local/bin"
 MIN_PYTHON_MINOR=10
 

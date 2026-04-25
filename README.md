@@ -31,14 +31,14 @@ forge task "implement X"     one-shot answer, no session needed
 
 **Option A — clone and run (recommended)**
 ```bash
-git clone https://github.com/atharva336/forge
+git clone https://github.com/flawlessenergy/forge
 cd forge
 bash install.sh
 ```
 
 **Option B — one-liner**
 ```bash
-curl -fsSL https://raw.githubusercontent.com/atharva336/forge/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/flawlessenergy/forge/main/install.sh | bash
 ```
 
 The script creates a `.venv` inside the repo, installs the package, and
@@ -53,14 +53,14 @@ Open **PowerShell** (Windows Terminal recommended) and run:
 
 **Option A — clone and run (recommended)**
 ```powershell
-git clone https://github.com/atharva336/forge
+git clone https://github.com/flawlessenergy/forge
 cd forge
 .\install.ps1
 ```
 
 **Option B — one-liner**
 ```powershell
-irm https://raw.githubusercontent.com/atharva336/forge/main/install.ps1 | iex
+irm https://raw.githubusercontent.com/flawlessenergy/forge/main/install.ps1 | iex
 ```
 
 The script creates a `.venv`, installs the package, places a `forge.cmd`

@@ -2,13 +2,13 @@
 # Run from an elevated PowerShell or Windows Terminal:
 #
 #   .\install.ps1                            (from inside the cloned repo)
-#   irm https://raw.githubusercontent.com/atharva336/forge/main/install.ps1 | iex
+#   irm https://raw.githubusercontent.com/flawlessenergy/forge/main/install.ps1 | iex
 #
 # Requirements: Python 3.10+, Git (both available at python.org and git-scm.com)
 
 $ErrorActionPreference = "Stop"
 
-$REPO_URL   = "https://github.com/atharva336/forge"
+$REPO_URL   = "https://github.com/flawlessenergy/forge"
 $INSTALL_DIR = "$env:USERPROFILE\.local\bin"
 $MIN_MINOR   = 10
 
