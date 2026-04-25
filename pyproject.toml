@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "forge"
+version = "0.1.0"
+description = "Specs-driven development toolkit with AI awareness"
+requires-python = ">=3.10"
+dependencies = [
+    "click>=8.0",
+    "rich>=13.0",
+    "gitpython>=3.1",
+    "requests>=2.28",
+    "pyperclip>=1.8",
+]
+
+[project.scripts]
+forge = "forge.cli:cli"
+
+[tool.setuptools.packages.find]
+where = ["."]
