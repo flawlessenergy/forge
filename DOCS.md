@@ -115,6 +115,20 @@ forge config --ai-signature "\[gpt\]" --ai-signature "openai-codex"
 These are the three commands you use every day. They compile your spec docs
 and inject them directly into Claude CLI — no copy-pasting.
 
+### Context priority
+
+When building the context block, forge uses the best available source:
+
+| Priority | Source | When used |
+|----------|--------|-----------|
+| 1 | **graphify graph** (`graph.json`) | `forge graph build` has been run |
+| 2 | **raw file dump** | No graph exists, falls back to up to 20 files |
+| 3 | **docs only** | `--no-context` flag is passed |
+
+The graph query is targeted to your task description or opening message — so
+Claude gets only the nodes relevant to what you're doing, not the entire graph.
+Run `forge graph build` once to unlock this mode.
+
 ---
 
 ### `forge chat`
@@ -133,6 +147,7 @@ forge chat [MESSAGE] [OPTIONS]
 | `--no-context` | Include spec docs only — skip codebase files |
 | `-e, --ext .EXT` | Only include files with this extension (repeatable) |
 | `--max-files N` | Max codebase files to include (default: 20) |
+| `--graph-file FILE` | graphify graph file to use (default: `graph.json`) |
 | `-m, --model ALIAS` | Claude model to use (`sonnet`, `opus`, `haiku`) |
 | `--continue` | Resume the most recent Claude conversation |
 | `-n, --name NAME` | Give this session a display name |
@@ -142,7 +157,7 @@ forge chat [MESSAGE] [OPTIONS]
 # Open a session — Claude already knows your stack and tasks
 forge chat
 
-# Start with an opening message
+# Start with an opening message (graph query targets this message)
 forge chat "let's build TASK-1 from the spec"
 
 # Docs only — no source files in context (faster for planning)
@@ -151,7 +166,7 @@ forge chat --no-context
 # Resume last session with fresh context
 forge chat --continue
 
-# Only include Python files in context
+# Only include Python files in context (raw-file mode)
 forge chat -e .py -e .ts
 
 # Name the session for easy resuming later
@@ -180,15 +195,16 @@ forge task DESCRIPTION [OPTIONS]
 | `--no-context` | Docs only — skip codebase files |
 | `-e, --ext .EXT` | Only include files with this extension (repeatable) |
 | `--max-files N` | Max codebase files to include (default: 20) |
+| `--graph-file FILE` | graphify graph file to use (default: `graph.json`) |
 | `-m, --model ALIAS` | Claude model alias |
 | `--output-format` | `text` (default), `json`, or `stream-json` |
 
 **Examples**
 ```bash
-# Implement a task — Claude reads your full spec context automatically
+# Implement a task — graph is queried for nodes relevant to TASK-1
 forge task "implement the login endpoint from TASK-1"
 
-# Only scan Python files (faster, fewer tokens)
+# Only scan Python files (raw-file fallback mode)
 forge task "write pytest tests for auth.py" -e .py
 
 # Quick question with no codebase (just the docs)
@@ -220,12 +236,13 @@ forge sync [OPTIONS]
 |--------|-------------|
 | `--compress / --no-compress` | Apply compression (default: on) |
 | `--no-context` | Docs only — skip codebase files |
+| `--graph-file FILE` | graphify graph file to use (default: `graph.json`) |
 | `--dry-run` | Print what would be written without touching `CLAUDE.md` |
 | `--strip` | Remove the forge section from `CLAUDE.md` |
 
 **Examples**
 ```bash
-# Write docs to CLAUDE.md, then just run `claude` as normal
+# Write docs to CLAUDE.md (uses graph if graph.json exists), then just run `claude`
 forge sync
 claude
 
